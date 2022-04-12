@@ -9,19 +9,13 @@ import {
   Media,
 } from "reactstrap";
 
-class DishComponent extends Component {
-  componentDidMount() {
-    console.log("DishDetail Component componentDidMount is invoked");
-  }
-  componentDidUpdate() {
-    console.log("DishDetail Component componentdidupdate is inoked");
-  }
-
-  renderComments() {
-    if (DishComponent == null) {
+const DishComponent = (props) => {
+  const renderComments = () => {
+    console.log("IN RENDER COMMENTS");
+    if (renderDish == null) {
       return <div></div>;
     } else {
-      const comments = this.props.dish.comments.map((comments) => {
+      const comments = props.dish.comments.map((comments) => {
         return (
           <div key={comments.id}>
             <Media tag="li" className="list-unstyled">
@@ -42,16 +36,15 @@ class DishComponent extends Component {
       });
       return comments;
     }
-  }
+  };
 
-  render() {
-    console.log("DishDetail Component rendered is inoked");
-    if (this.props.dish == null) {
-      return <></>;
+  const renderDish = () => {
+    console.log("IN RENDER DISH");
+    if (props.dish == null) {
+      return null;
     } else {
-      let selectedDish = this.props.dish;
-      const comments = this.renderComments();
-      const DishComponent = (
+      let selectedDish = props.dish;
+      return (
         <div className="container">
           <div className="row">
             <div className="m-1 col-12 col-md-5">
@@ -70,14 +63,15 @@ class DishComponent extends Component {
 
             <div className="col-12 col-md-5 m-1">
               <h4>Comments</h4>
-              {comments}
+              {renderComments()}
             </div>
           </div>
         </div>
       );
-      return DishComponent;
     }
-  }
-}
+  };
+
+  return <>{renderDish()}</>;
+};
 
 export default DishComponent;
