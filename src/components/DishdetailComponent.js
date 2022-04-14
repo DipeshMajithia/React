@@ -7,7 +7,10 @@ import {
   CardBody,
   CardTitle,
   Media,
+  Breadcrumb,
+  BreadcrumbItem,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const DishComponent = (props) => {
   const renderComments = () => {
@@ -15,22 +18,24 @@ const DishComponent = (props) => {
     if (renderDish == null) {
       return <div></div>;
     } else {
-      const comments = props.dish.comments.map((comments) => {
+      const comments = props.comments.map((comments) => {
         return (
-          <div key={comments.id}>
-            <Media tag="li" className="list-unstyled">
-              <Media body>
-                <span>{comments.comment}</span>
-                <br />
-                <br />
-                <span>
-                  -- {comments.author},{" "}
-                  {moment(comments.date).format("MMM DD, YYYY")}
-                </span>
-                <br />
-                <br />
+          <div key={comments.id} className="container">
+            <div className="row">
+              <Media tag="li" className="list-unstyled">
+                <Media body>
+                  <span>{comments.comment}</span>
+                  <br />
+                  <br />
+                  <span>
+                    -- {comments.author},{" "}
+                    {moment(comments.date).format("MMM DD, YYYY")}
+                  </span>
+                  <br />
+                  <br />
+                </Media>
               </Media>
-            </Media>
+            </div>
           </div>
         );
       });
@@ -46,6 +51,16 @@ const DishComponent = (props) => {
       let selectedDish = props.dish;
       return (
         <div className="container">
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <Link to="/menu">Menu</Link>
+            </BreadcrumbItem>
+            <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+          </Breadcrumb>
+          <div className="col-12">
+            <h3>{props.dish.name}</h3>
+            <hr />
+          </div>
           <div className="row">
             <div className="m-1 col-12 col-md-5">
               <Card>
@@ -63,7 +78,7 @@ const DishComponent = (props) => {
 
             <div className="col-12 col-md-5 m-1">
               <h4>Comments</h4>
-              {renderComments()}
+              <div className="row">{renderComments()}</div>
             </div>
           </div>
         </div>
